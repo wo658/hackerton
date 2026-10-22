@@ -2,6 +2,9 @@
 
 Ambition for Korea 해커톤 팀의 기본 개발 환경입니다. Next.js App Router, TypeScript, Tailwind CSS, Vercel AI SDK, Claude 스트리밍 예제를 포함합니다.
 
+- GitHub: https://github.com/wo658/hackerton (비공개)
+- 데모: https://hackerton-xi.vercel.app
+
 ## 로컬 실행
 
 Node.js 24 LTS와 pnpm 11.2.2를 사용합니다.

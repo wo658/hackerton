@@ -9,10 +9,13 @@ const chatRequest = z.object({
   messages: z.array(z.object({
     id: z.string().min(1).max(200),
     role: z.enum(["user", "assistant"]),
-    parts: z.array(z.object({
-      type: z.literal("text"),
-      text: z.string().min(1).max(8000),
-    })).min(1).max(10),
+    parts: z.array(z.discriminatedUnion("type", [
+      z.object({ type: z.literal("text"), text: z.string().max(8000) }),
+      // useChat includes this marker in assistant replies on later turns.
+      z.object({ type: z.literal("step-start") }),
+    ])).min(1).max(10),
+  }).refine((message) => message.parts.some((part) => part.type === "text" && part.text.trim().length > 0), {
+    message: "A message must contain text.",
   })).min(1).max(40),
 });
 

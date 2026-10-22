@@ -1,39 +1,78 @@
 ---
 name: ai-sdk
-description: 이 프로젝트에서 Vercel AI SDK와 Anthropic provider로 Claude 기능을 구현하거나 수정한다. 텍스트 생성, 스트리밍, 구조화된 출력, 도구 호출, 모델 설정을 다룰 때 사용한다.
-metadata:
-  upstream: https://github.com/vercel/ai/tree/main/skills/use-ai-sdk
-  adapted-for: hackerton-claude-code
+description: 'Answer questions about the AI SDK and help build AI-powered features. Use when developers: (1) Ask about AI SDK functions like generateText, streamText, ToolLoopAgent, embed, or tools, (2) Want to build AI agents, chatbots, RAG systems, or text generation features, (3) Have questions about AI providers (OpenAI, Anthropic, Google, etc.), streaming, tool calling, structured output, or embeddings, (4) Use React hooks like useChat or useCompletion. Triggers on: "AI SDK", "Vercel AI SDK", "generateText", "streamText", "add AI to my app", "build an agent", "tool calling", "structured output", "useChat".'
 ---
 
-# Claude 서비스용 Vercel AI SDK
+## What the AI SDK Is
 
-## 먼저 확인
+The AI SDK by Vercel (the `ai` package on npm) is a TypeScript toolkit for building AI applications. It provides a unified API across model providers for text generation, structured output, tool calling, agents, embeddings, and framework UI integrations.
 
-`package.json`에서 설치 버전을 확인하고 관련 번들 문서·소스만 읽는다. API 이름과 옵션을 기억에 의존하지 않는다.
+- Repository: https://github.com/vercel/ai
+- Documentation: https://ai-sdk.dev/docs
 
-- `node_modules/ai/docs/`, `node_modules/ai/src/`
-- `node_modules/@ai-sdk/anthropic/docs/`, `node_modules/@ai-sdk/anthropic/src/`
+## Critical: Do Not Trust Your Own Memory
 
-로컬 자료에 없으면 https://ai-sdk.dev/docs 를 확인한다. 모델 ID·접근 권한은 https://platform.claude.com/docs/en/models/overview 및 실제 행사 계정 기준으로 확인한다. `ANTHROPIC_MODEL` override를 존중한다.
+Whatever you remember about the AI SDK is likely outdated. The SDK changes frequently across versions - APIs are renamed, removed, and added. Your training data almost certainly contains obsolete APIs, deprecated patterns, and model IDs that no longer exist. UI hooks like `useChat` are among the most frequently changed APIs, so be especially careful with client code.
 
-## 현재 출발점
+**Never write AI SDK code from memory.** Always verify every API, option, and pattern against the documentation and source code for the version that is actually installed in the project.
 
-`src/lib/ai.ts`의 `getModel()`이 서버 전용 모델 팩토리다. `@ai-sdk/anthropic`으로 Anthropic API를 직접 호출하며 `ANTHROPIC_API_KEY`를 사용한다. 현재 채팅 UI·채팅 API·실제 모델 호출 API는 없다. `GET /api/health`는 서버 상태만 확인한다.
+## Use the Bundled, Version-Matched Docs
 
-미션에 필요한 서버 기능에 `getModel()`을 가져와 구현한다. 단발 생성은 `generateText`, 응답 지연을 줄일 필요가 있으면 `streamText`, 구조화된 데이터는 설치 버전의 출력 API와 Zod 스키마를 사용한다. AI Gateway나 Claude Agent SDK로 교체할 필요를 먼저 만들지 않는다.
+The `ai` package ships its full documentation and source code inside `node_modules`. These always match the installed version, so trust them over anything you remember.
 
-## 필요한 기능만 구현
+1. Ensure `ai` is installed. Check `node_modules/ai/` or locate the workspace package in a monorepo that depends on `ai` (e.g. `apps/<name>/node_modules/ai/`). If `ai` is not installed anywhere in the project, install **only** the `ai` package into the target package using the project's package manager (e.g. `pnpm add ai --filter <pkg>` or `npm install ai`). Install provider packages (e.g. `@ai-sdk/openai`) and framework packages (e.g. `@ai-sdk/react`) later, when the task requires them.
+2. Read and grep the bundled docs at `node_modules/ai/docs/` (or `<package>/node_modules/ai/docs/`) and the source at `node_modules/ai/src/`.
+3. Provider and framework packages bundle their own docs at `node_modules/@ai-sdk/<name>/docs/` (or `<package>/node_modules/@ai-sdk/<name>/docs/`).
+4. If something isn't in the bundled docs, search https://ai-sdk.dev/docs. You can append `.md` to any docs page URL to get its markdown, and search via `https://ai-sdk.dev/api/search-docs?q=your_query`.
+5. If you cannot find support for an answer in the docs or source, say so explicitly — do not guess.
 
-- 사용자 입력은 서버에서 Zod 등 기존 도구로 검증한다. 모델 출력 문자열을 스키마 검증 없이 타입 안전한 데이터로 취급하지 않는다.
-- 모델 호출에는 용도에 맞는 출력·시간 제한, 중단 신호, 사용자용 실패 응답을 둔다. 내부 provider 오류나 비밀정보를 그대로 반환하지 않는다.
-- 채팅이 미션에 필요해지면 `@ai-sdk/react`를 추가하고 설치 버전의 `useChat` 문서부터 확인한다. SDK의 assistant 메시지를 다시 전송하는 후속 대화까지 검증한다. 텍스트 외 제어 메시지·provider 메타데이터·도구 결과를 구분한다.
-- 도구에는 입력 스키마와 실행 위치를 명시한다. 에이전트 루프가 필요하면 SDK 기본 추상화를 우선 확인한다. 클라이언트가 전송한 도구 결과를 그대로 신뢰하지 않는다.
-- 구조화된 출력·파일·도구·에이전트는 이번 요청에 필요한 경우에만 도입한다. DevTools·관측 서비스도 구체적인 디버깅 필요가 있을 때 추가한다.
-- 실제 키는 `.env.local`과 Vercel 환경변수에 둔다. 브라우저로 노출하지 않으며 키가 없어도 기본 앱·health·빌드는 동작하게 한다.
+## AI Gateway: The Fastest Way to Start
 
-## 확인
+The Vercel AI Gateway is the fastest way to get started with the AI SDK. It provides access to models from OpenAI, Anthropic, Google, and other providers through a single API, without installing provider packages or managing multiple API keys.
 
-`pnpm check`를 실행한다. 새 AI 기능은 입력 검증과 실패 경로부터 확인하고, 실제 API 키가 있을 때 실제 응답을 확인한다. 스트리밍·다국어·후속 대화·중단은 변경에 해당하는 경우 검증한다. 모의 응답 검증을 실제 Claude 호출 검증으로 보고하지 않는다.
+To set it up:
 
-빠른 개발 루프·배포 지침은 루트 `CLAUDE.md`를 따른다.
+1. Authenticate with OIDC (for Vercel deployments) or get an AI Gateway API key.
+2. Provide it to your app via the `AI_GATEWAY_API_KEY` environment variable.
+3. Reference models with `provider/model` strings.
+
+For exact setup, authentication, and usage, read the bundled guide and the AI Gateway docs.
+
+### Choosing a Model
+
+Never use model IDs from memory — models are released and retired frequently. Fetch the current list before writing code that references a model. Do not truncate the list (e.g. with `head`) so you can find the newest models:
+
+```bash
+# All available models
+curl -s https://ai-gateway.vercel.sh/v1/models | jq -r '.data[].id'
+
+# Filter by provider (e.g. anthropic, openai, google)
+curl -s https://ai-gateway.vercel.sh/v1/models | jq -r '[.data[] | select(.id | startswith("anthropic/")) | .id] | reverse | .[]'
+```
+
+When multiple versions of a model exist, prefer the one with the highest version number.
+
+## Building and Consuming Agents
+
+Use the SDK's built-in agent abstraction (such as `ToolLoopAgent`) rather than hand-rolling tool-calling loops. For end-to-end type safety, infer the UI message type from your agent definition when consuming it on the client (e.g. with `useChat`). Consuming an agent is framework-specific: check `package.json` to detect the stack, then follow the matching quickstart.
+
+Look up the current agent, tool, and type-safety APIs in the bundled docs (`node_modules/ai/docs/`, especially the agents section) or at https://ai-sdk.dev/docs.
+
+## DevTools
+
+AI SDK DevTools captures your AI SDK calls - requests, responses, tool calls, token usage, and multi-step runs - so you can inspect exactly what your agents do. Use it while developing to debug generations. It is a separate package and is intended for local development only.
+
+For setup instructions, read the bundled DevTools documentation.
+
+## Keep the SDK Current
+
+Outdated installs are the most common source of errors. Compare the installed version against the latest:
+
+- **Installed:** the `version` field in `node_modules/ai/package.json`.
+- **Latest:** run `npm view ai version`.
+
+If the installed version is a major version (or more) behind the latest, tell the user they are on an old release, and recommend upgrading before continuing. Migration guides are at https://ai-sdk.dev/docs/migration-guides.
+
+## After Making Changes
+
+Run the project's type checker. Be minimal — only set options that differ from the defaults, checking docs or source for the defaults rather than over-specifying. Most type errors come from remembered, now-changed APIs; re-check the current docs and source when they occur.

@@ -58,10 +58,12 @@ Vercel AI SDK와 `@ai-sdk/anthropic`으로 직접 호출한다. 모델 기본값
 
 ## 프로젝트 스킬
 
-관련 작업에서 필요한 스킬만 읽는다.
+두 스킬은 Vercel 공식 영문 원본을 그대로 사용한다. 스킬 파일을 번역하거나 프로젝트 맞춤 내용으로 덮어쓰지 않는다. 프로젝트 고유 지침은 이 파일에 작성한다. 관련 작업에서 필요한 스킬만 읽는다.
 
 - `/ai-sdk`: `.claude/skills/ai-sdk/SKILL.md`
 - `/vercel-react-best-practices`: `.claude/skills/vercel-react-best-practices/SKILL.md`
+
+이 프로젝트는 기존 Anthropic 직접 연결을 유지한다. 공식 AI SDK 스킬의 Gateway 시작 안내가 현재 연결을 교체하라는 의미는 아니다. 채팅이 필요해질 때만 React용 AI SDK를 추가한다.
 
 규칙 예시에 등장하는 라이브러리를 자동으로 설치하지 않는다. 프레임워크 기본 기능과 기존 의존성으로 먼저 구현하고, 미션에 필요한 경우에만 추가 도입한다.
 

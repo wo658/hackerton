@@ -9,19 +9,6 @@ metadata:
 
 # Vercel React Best Practices
 
-## 이 프로젝트에서 적용
-
-Claude Code에서 Next.js App Router와 React 코드를 작성·검토할 때 사용한다. 루트 `CLAUDE.md`의 개발·배포 지침을 함께 따른다.
-
-- 기본은 Server Component이며 이벤트·입력 등 상호작용이 필요한 경계만 Client Component로 둔다.
-- Anthropic provider, 키, 서버 코드는 클라이언트로 가져오지 않는다.
-- 독립적인 데이터 요청의 병렬화와 불필요한 클라이언트 번들 방지를 먼저 검토한다.
-- 현재 기능에 필요한 규칙만 적용한다. 규칙 예시에 나오는 SWR, 캐시 라이브러리 등을 사용 사실만으로 새로 설치하지 않는다.
-- 성능 개선은 사용자 체감이나 확인 가능한 문제를 기준으로 한다. 추측에 따른 메모이제이션·캐시 도입으로 해커톤 구현을 복잡하게 만들지 않는다.
-- Next.js API는 `node_modules/next/dist/docs/`의 설치 버전 문서로 확인한다.
-
-아래는 Vercel 공식 스킬의 규칙 목록이다. 상세 예제는 필요한 `rules/*.md`만 읽는다.
-
 Comprehensive performance optimization guide for React and Next.js applications, maintained by Vercel. Contains 70 rules across 8 categories, prioritized by impact to guide automated refactoring and code generation.
 
 ## When to Apply
@@ -157,9 +144,6 @@ Each rule file contains:
 - Correct code example with explanation
 - Additional context and references
 
-## Source
+## Full Compiled Document
 
-Adapted for this repository from Vercel Engineering's MIT-licensed skill:
-https://github.com/vercel-labs/agent-skills/tree/main/skills/react-best-practices
-
-All included rule examples are available in `rules/`; no global skill installation is required.
+For the complete guide with all rules expanded: `AGENTS.md`

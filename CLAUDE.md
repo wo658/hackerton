@@ -38,10 +38,10 @@ Vercel AI SDK의 `@ai-sdk/anthropic`으로 Anthropic API를 직접 호출한다.
 
 코드 변경은 린트·타입 검사와 관련 동작을 확인하고, 설정·의존성·빌드에 영향을 주면 프로덕션 빌드도 확인한다. 문서만 바꾸면 링크와 스킬 형식을 확인하면 된다. 실제 키가 없을 때 모의 스트림 검증과 실제 Claude 호출 검증을 구분해 보고한다.
 
-- GitHub: `wo658/hackerton` (비공개)
+- GitHub: `wo658/hackerton` (개인 공개 레포)
 - Vercel: `kjhs-projects-8661d4ca/hackerton`
 - 데모: https://hackerton-xi.vercel.app
 - `main` push는 Production 자동 배포, 다른 브랜치·PR은 Preview 배포다.
 - GitHub CI와 Vercel 배포는 병렬이다. 빠른 배포를 위해 별도 CI 대기·승인 단계를 추가하지 않는다.
 - 커밋·push·배포는 현재 사용자 요청에서 허용한 범위로 진행한다. Git 연동이 있으면 같은 변경을 CLI로 중복 배포할 필요가 없다.
-- 비공개 레포의 팀원 작성 커밋 배포에는 Vercel Hobby 협업 제한이 있다. 임의로 레포 공개 여부나 요금제를 바꾸지 않는다.
+- 개인 공개 레포와 Vercel Hobby를 사용한다. 팀원이 직접 push하려면 GitHub 협업자 초대가 필요하며, 초대는 소유자가 추후 진행한다. 레포 공개 여부나 요금제를 임의로 바꾸지 않는다.

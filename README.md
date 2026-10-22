@@ -2,7 +2,7 @@
 
 Ambition for Korea 해커톤 팀의 기본 개발 환경입니다. Next.js App Router, TypeScript, Tailwind CSS, Vercel AI SDK, Claude 스트리밍 예제를 포함합니다.
 
-- GitHub: https://github.com/wo658/hackerton (비공개)
+- GitHub: https://github.com/wo658/hackerton (개인 공개 레포)
 - 데모: https://hackerton-xi.vercel.app
 
 ## 로컬 실행
@@ -40,7 +40,7 @@ pnpm build
 
 GitHub Actions에서 위 검사를 실행합니다. Vercel Git 연동으로 `main` push는 Production, 다른 브랜치와 PR은 Preview 배포를 만듭니다. CI와 Vercel 빌드는 독립적으로 실행됩니다.
 
-Vercel 프로젝트의 Environment Variables에 `ANTHROPIC_API_KEY`를 필요한 환경별로 등록한 뒤 재배포하세요. 모델 변경 시 `ANTHROPIC_MODEL`도 등록합니다. 팀원이 커밋하려면 GitHub 초대가 필요하며, 비공개 레포의 다른 작성자 커밋 배포에는 Vercel 요금제 및 멤버 권한 제한이 적용될 수 있습니다.
+Vercel 프로젝트의 Environment Variables에 `ANTHROPIC_API_KEY`를 필요한 환경별로 등록한 뒤 재배포하세요. 모델 변경 시 `ANTHROPIC_MODEL`도 등록합니다. 현재 개인 공개 레포와 Vercel Hobby 조합을 사용합니다. 팀원이 직접 push하려면 소유자가 GitHub 저장소 Settings → Collaborators에서 초대해야 합니다. 팀원 초대는 추후 진행합니다.
 
 ## 개발 가이드
 

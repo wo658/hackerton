@@ -10,7 +10,7 @@
 | --- | --- |
 | 웹 | Next.js App Router · React · TypeScript strict · Tailwind CSS |
 | AI | Vercel AI SDK · Anthropic 직접 연결 · 서버 전용 모델 팩토리 |
-| AI 개발 지원 | Claude Code 프로젝트 지침 · Next DevTools MCP · AI SDK/React 스킬 |
+| AI 개발 지원 | Claude Code 프로젝트 지침 · Next DevTools MCP · AI SDK/Next 개발 검증 스킬 |
 | 검증 | Next 기본 ESLint · 타입 검사 · 빌드 · GitHub Actions |
 | 배포 | `main` push → Vercel Production, 다른 브랜치 → Preview |
 
@@ -62,7 +62,27 @@ Claude에 요청할 때는 다음처럼 시작하면 됩니다.
 
 MCP는 실행 중인 앱의 오류·라우트·로그·컴파일 상태를 연결합니다. 문서 내용을 모두 자동으로 읽어주는 서버는 아닙니다. MCP가 연결되지 않아도 위 문서를 직접 검색·참조할 수 있습니다.
 
-필요하면 `/ai-sdk`, `/vercel-react-best-practices`를 직접 호출합니다. 두 스킬은 Vercel 공식 영문 원본이며, 프로젝트별 지침은 `CLAUDE.md`에서 관리합니다. 관련 작업에서는 자동 선택도 가능합니다.
+### 스킬은 기능 개발과 동작 검증에 집중합니다
+
+| 스킬 | 사용하는 작업 |
+| --- | --- |
+| `/ai-sdk` | Claude 호출·스트리밍·구조화된 출력·도구 기능 구현 |
+| `/next-dev-loop` | Next.js 변경 후 컴파일·오류·브라우저 동작 확인 |
+
+두 스킬은 공식 저장소의 **영문 원본 그대로** 포함했습니다. 프로젝트별 지침만 `CLAUDE.md`에서 관리합니다. 관련 작업에서는 자동 선택되며 명령으로 직접 호출할 수도 있습니다. 성능 최적화 스킬은 기본 구성에서 제외했습니다.
+
+`next-dev-loop`의 필수 도구인 `agent-browser`는 개발 의존성으로 버전을 고정했습니다. 먼저 실행 환경을 확인합니다.
+
+```sh
+pnpm exec agent-browser --version
+pnpm exec agent-browser doctor --offline --quick
+```
+
+Chrome이 없다고 나오면 최초 한 번 `pnpm exec agent-browser install`을 실행하세요. Linux에서 시스템 라이브러리도 필요하면 공식 설치 가이드를 확인하세요. 팀원별 설치이며 Vercel 빌드나 배포 과정에서는 브라우저를 설치·실행하지 않습니다.
+
+터미널에서 Claude Code를 사용한다면 `pnpm exec claude`로 시작하면 프로젝트 CLI를 PATH에 포함할 수 있습니다. 다른 방식으로 시작한 경우에는 `CLAUDE.md`의 PATH 안내를 따릅니다. 검증 중에는 `pnpm dev`가 켜져 있어야 합니다.
+
+권장 작업 순서는 **작은 기능 구현 → `/next-dev-loop`로 실제 동작·실패 경로 확인 → `pnpm check` → push**입니다. 이 스킬은 일반 회귀 테스트 스위트를 대신하지 않으며, 전체 동작에 영향이 큰 기능에는 필요한 테스트를 추가합니다.
 
 ## 3. 어디부터 수정하나요?
 
@@ -137,6 +157,9 @@ CLAUDE.md               # 프로젝트 개발 원칙·문서 찾는 순서
 ## 참고
 
 - [Next.js AI 에이전트와 버전별 번들 문서](https://nextjs.org/docs/app/guides/ai-agents)
+- [Next 개발 검증 스킬 원본](https://github.com/vercel/next.js/tree/canary/skills/next-dev-loop)
+- [AI SDK 스킬 원본](https://github.com/vercel/ai/tree/main/skills/use-ai-sdk)
+- [Agent Browser 설치](https://agent-browser.dev/installation)
 - [Next.js MCP 공식 가이드](https://nextjs.org/docs/app/guides/mcp)
 - [Claude Code 프로젝트 MCP 설정](https://code.claude.com/docs/en/mcp#project-scope)
 - [Vercel AI SDK](https://ai-sdk.dev/docs) · [Anthropic 모델 목록](https://platform.claude.com/docs/en/models/overview)

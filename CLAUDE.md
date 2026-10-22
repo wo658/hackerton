@@ -1,6 +1,6 @@
 # Hackerton · Claude Code 프로젝트 가이드
 
-Ambition for Korea 해커톤용 글로벌 AI 서비스의 시작점이다. 실제 구현 시간은 약 5시간이다. 요청한 핵심 사용자 흐름을 먼저 연결하고, 미션이 정해지기 전에는 제품·DB·인증·에이전트 구조를 선결정하지 않는다. 설명은 한국어, 기본 제품 UI는 영어를 사용한다.
+Ambition for Korea 해커톤용 글로벌 AI 서비스의 시작점이다. 실제 구현 시간은 약 5시간이다. 우선순위는 핵심 기능 완성, 실패 경로 처리, 실제 동작 확인이다. 측정된 문제나 사용자 요청이 없으면 번들·캐시·렌더링 성능 최적화를 선행하지 않는다. 요청한 핵심 사용자 흐름을 먼저 연결하고, 미션이 정해지기 전에는 제품·DB·인증·에이전트 구조를 선결정하지 않는다. 설명은 한국어, 기본 제품 UI는 영어를 사용한다.
 
 ## 환경과 명령
 
@@ -58,10 +58,16 @@ Vercel AI SDK와 `@ai-sdk/anthropic`으로 직접 호출한다. 모델 기본값
 
 ## 프로젝트 스킬
 
-두 스킬은 Vercel 공식 영문 원본을 그대로 사용한다. 스킬 파일을 번역하거나 프로젝트 맞춤 내용으로 덮어쓰지 않는다. 프로젝트 고유 지침은 이 파일에 작성한다. 관련 작업에서 필요한 스킬만 읽는다.
+아래 두 스킬은 Vercel 공식 영문 원본을 그대로 사용한다. 스킬 파일을 번역하거나 프로젝트 맞춤 내용으로 덮어쓰지 않는다. 프로젝트 고유 지침은 이 파일에 작성한다. 관련 작업에서 필요한 스킬만 읽는다.
 
 - `/ai-sdk`: `.claude/skills/ai-sdk/SKILL.md`
-- `/vercel-react-best-practices`: `.claude/skills/vercel-react-best-practices/SKILL.md`
+- `/next-dev-loop`: `.claude/skills/next-dev-loop/SKILL.md` — Next.js 변경 후 런타임·브라우저 동작 검증
+
+`next-dev-loop`는 Next.js 16.3+ / Turbopack과 `agent-browser` 0.31.1+가 필요하다. 이 프로젝트는 `agent-browser`를 고정 개발 의존성으로 포함한다. CLI는 `pnpm exec agent-browser`로 확인할 수 있다. 공식 스킬의 `agent-browser` 명령을 실행하는 셸에서는 먼저 `export PATH="$PWD/node_modules/.bin:$PATH"`를 적용해 프로젝트에 설치한 실행 파일이 PATH에 있도록 한다. Claude Code를 터미널에서 시작한다면 `pnpm exec claude`를 사용할 수 있다.
+
+브라우저가 없으면 `pnpm exec agent-browser install`로 설치한다. CLI와 Chrome이 준비되지 않았으면 `next-dev-loop` 검증 성공으로 보고하지 않는다. 버전별 CLI 안내는 `pnpm exec agent-browser skills get core`로 읽는다. 브라우저 상태와 소켓은 도구의 기본 사용자 저장 위치를 쓰며 프로젝트에 커밋하지 않는다. 전역 도구 설치나 다른 프로젝트의 스킬은 변경하지 않는다.
+
+작업은 작은 사용자 흐름 하나씩 구현 → `next-dev-loop`로 실행·오류·의도한 동작 확인 → 작업 단위 `pnpm check` 순서로 진행한다. 입력 오류·빈 결과·모델 호출 실패·중복 제출 등 이번 기능에 해당하는 실패 경로를 함께 확인한다. 성능 스킬, 캐시 도입, 번들 분석을 기본 작업 루프에 추가하지 않는다.
 
 이 프로젝트는 기존 Anthropic 직접 연결을 유지한다. 공식 AI SDK 스킬의 Gateway 시작 안내가 현재 연결을 교체하라는 의미는 아니다. 채팅이 필요해질 때만 React용 AI SDK를 추가한다.
 

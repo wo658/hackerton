@@ -13,7 +13,8 @@ const chatRequest = z.object({
       z.object({ type: z.literal("text"), text: z.string().max(8000) }),
       // useChat includes this marker in assistant replies on later turns.
       z.object({ type: z.literal("step-start") }),
-    ])).min(1).max(10),
+      z.object({ type: z.literal("custom"), kind: z.literal("anthropic.message_start") }),
+    ])).min(1).max(10).transform((parts) => parts.filter((part) => part.type === "text")),
   }).refine((message) => message.parts.some((part) => part.type === "text" && part.text.trim().length > 0), {
     message: "A message must contain text.",
   })).min(1).max(40),

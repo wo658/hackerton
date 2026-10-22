@@ -7,11 +7,11 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "typecheck": "next typegen && tsc --noEmit"
+    "typecheck": "next typegen && tsc --noEmit",
+    "check": "pnpm lint && pnpm typecheck"
   },
   "dependencies": {
     "@ai-sdk/anthropic": "^4.0.85",
-    "@ai-sdk/react": "^4.0.152",
     "ai": "^7.0.148",
     "next": "16.4.2",
     "react": "19.3.0",
@@ -26,6 +26,7 @@
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.4.2",
+    "next-devtools-mcp": "0.4.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   },

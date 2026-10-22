@@ -13,7 +13,7 @@ metadata:
 
 Claude Code에서 Next.js App Router와 React 코드를 작성·검토할 때 사용한다. 루트 `CLAUDE.md`의 개발·배포 지침을 함께 따른다.
 
-- 기본은 Server Component이며 이벤트·입력·`useChat`이 필요한 경계만 Client Component로 둔다.
+- 기본은 Server Component이며 이벤트·입력 등 상호작용이 필요한 경계만 Client Component로 둔다.
 - Anthropic provider, 키, 서버 코드는 클라이언트로 가져오지 않는다.
 - 독립적인 데이터 요청의 병렬화와 불필요한 클라이언트 번들 방지를 먼저 검토한다.
 - 현재 기능에 필요한 규칙만 적용한다. 규칙 예시에 나오는 SWR, 캐시 라이브러리 등을 사용 사실만으로 새로 설치하지 않는다.

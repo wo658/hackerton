@@ -12,6 +12,8 @@ AI 해커톤용 시작 프로젝트다. 미션·제품 요구사항은 아직 �
 
 ## 개발·검증
 
+- API 추가·변경·삭제 시 `AGENTS.md`의 API 문서 유지 지침에 따라 `public/openapi.json`을 같은 작업에서 갱신한다. `/api-docs`에서 실제 호출을 확인한다.
+
 - 작은 사용자 흐름부터 완성하고 입력 검증·실패 처리를 함께 확인한다. 성능 최적화와 추가 도구는 필요할 때 도입한다.
 - `pnpm dev`로 개발, 작업 단위로 `pnpm check`(린트·타입 검사), 최종 확인에 `pnpm build`를 실행한다. 문서만 수정하면 형식·참조 확인으로 충분하다.
 - 설치 버전의 문서를 우선 참고한다: `node_modules/next/dist/docs/`, `node_modules/ai/docs/`, `node_modules/@ai-sdk/anthropic/`. 필요한 부분만 검색해 읽는다.

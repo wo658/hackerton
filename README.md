@@ -14,6 +14,12 @@ AI 해커톤에서 핵심 기능을 빠르게 구현하기 위한 Next.js 시작
 
 현재는 최소 시작 화면과 `/api/health`만 제공합니다. 채팅 UI나 실제 모델 호출 API는 아직 없으며, 제품 기능은 미션에 맞춰 구현합니다.
 
+## API 문서
+
+- `/api-docs`: Swagger UI에서 API 설명을 보고 `Execute`로 현재 서버에 직접 요청합니다.
+- `/openapi.json`: OpenAPI 명세. 현재 `GET /api/health`의 응답과 예시를 포함합니다.
+- API 작업 시 Agent가 같은 변경에서 명세도 갱신하도록 `AGENTS.md`·`CLAUDE.md`에 지침을 두었습니다. 코드에서 명세를 자동 추출하는 방식은 아닙니다.
+
 ## 개발 기본값
 
 **브라우저 입력 → Next.js 서버에서 검증·AI API 호출 → 브라우저 결과 표시** 구조를 우선합니다.

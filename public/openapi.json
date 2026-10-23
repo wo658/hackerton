@@ -1,0 +1,36 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Hackerton API",
+    "version": "0.1.0",
+    "description": "데모 API 문서입니다. Try it out → Execute로 현재 접속한 서버에 요청을 보낼 수 있습니다."
+  },
+  "servers": [{ "url": "/", "description": "현재 서버" }],
+  "paths": {
+    "/api/health": {
+      "get": {
+        "operationId": "getHealth",
+        "summary": "서버 상태 확인",
+        "description": "서버가 응답하는지 확인합니다. AI API 연결이나 환경변수 설정은 검사하지 않습니다.",
+        "tags": ["Health"],
+        "responses": {
+          "200": {
+            "description": "서버 정상 응답",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["status"],
+                  "properties": {
+                    "status": { "type": "string", "enum": ["ok"] }
+                  }
+                },
+                "example": { "status": "ok" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
